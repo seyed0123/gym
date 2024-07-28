@@ -12,14 +12,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
-            $_SESSION['username'] = $row['username'];
+            $_SESSION['username'] = $username;
             echo "Login successful. Welcome!";
             // Redirect to the appropriate dashboard
         } else {
             echo "Invalid password.";
         }
     } else {
-        echo "No user found with that email.";
+        echo "No user found with that username.";
     }
 
     $conn->close();

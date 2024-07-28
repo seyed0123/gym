@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Management Login/Signup</title>
+    <title>Login/Signup</title>
 </head>
 <body>
-
 <div class="container" id="login-container">
     <h2>Login</h2>
     <form action="php/login.php" method="post">
@@ -22,6 +21,17 @@
     <form action="php/register.php" method="post">
         <input type="text" name="username" placeholder="Username" required>
         <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="name" placeholder="name" required>
+        <input type="text" name="address" placeholder="address" required>
+        <input type="number" name="phone_number" placeholder="phone_number" required>
+        <input type="number" name="height" placeholder="height" required>
+        <input type="number" name="weight" placeholder="weight" required> 
+        <input type="date" name="date_of_birth" placeholder="date_of_birth" required>
+        <input type="radio" name="gender" value="female" required>Female
+        <input type="radio" name="gender" value="male" required>Male
+        <input type="text" name="job" placeholder="job" required>
+        <input type="text" name="way2intro" placeholder="way to introduce" required> 
+    
         <button type="submit">Sign Up</button>
     </form>
     <p>Already have an account? <a href="#" onclick="showLogin()">Login</a></p>

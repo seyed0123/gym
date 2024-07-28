@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $time_massage = $_POST['time_massage'];
     $id = uniqid();
 
-    $sql = "INSERT INTO session (id,useranme,date,total_time,num_session,time_sauna,time_jacuzzi,time_hydrotherapy,time_massage) values('$id','$username','$date',$total_time,$num_session,$time_sauna,$time_jacuzzi,$time_hydrotherapy,$time_massage);";
-
+    $sql = "INSERT INTO session (id,username,date,total_time,num_session,time_sauna,time_jacuzzi,time_hydrotherapy,time_massage) values('$id','$username','$date',$total_time,$num_session,$time_sauna,$time_jacuzzi,$time_hydrotherapy,$time_massage);";
+    echo $sql;
     try{
         $conn->query($sql);
         $newURL = '../index.php';

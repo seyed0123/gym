@@ -22,7 +22,7 @@ create table session(
     time_jacuzzi int,
     time_hydrotherapy int,
     time_massage int,
-    FOREIGN KEY (username) REFERENCES users(username)
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
 
 create table exersise(
@@ -44,14 +44,14 @@ create table program_user(
     start_time Date,
     practice_time Time,
     diagnosis varchar(200),
-    FOREIGN KEY (username) REFERENCES users(username),
-    FOREIGN KEY (program_id) REFERENCES program(id),
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE,
+    FOREIGN KEY (program_id) REFERENCES program(id) ON DELETE CASCADE,
     UNIQUE key(username,program_id)
 );
 
 create table exersise_program(
     exersise_id varchar(50),
     program_id varchar(50),
-    FOREIGN KEY (exersise_id) REFERENCES exersise(id),
-    FOREIGN KEY (program_id) REFERENCES program(id)
+    FOREIGN KEY (exersise_id) REFERENCES exersise(id) ON DELETE CASCADE,
+    FOREIGN KEY (program_id) REFERENCES program(id) ON DELETE CASCADE
 );

@@ -1,4 +1,18 @@
-<!DOCTYPE html>
+<?php 
+session_start();
+?>
+    <?php
+    if(empty($_SESSION['username']))
+    {
+        $newURL = 'login.html';
+        header('Location: '.$newURL);
+    } else
+    {
+        $newURL = 'dashbord.php';
+        header('Location: '.$newURL);
+    }
+    ?>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,6 +22,6 @@
     <title>gym</title>
 </head>
 <body>
-    <a href="login.html">change the screen</a>
+
 </body>
-</html>
+</html> -->

@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             $_SESSION['username'] = $username;
-            echo "Login successful. Welcome!";
-            // Redirect to the appropriate dashboard
+            $newURL = '../index.php';
+            header('Location: '.$newURL);
         } else {
             echo "Invalid password.";
         }

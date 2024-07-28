@@ -24,12 +24,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $way2intro = $_POST['way2intro']; 
     
         $sql = "INSERT INTO users (username, password,name,address,heigth,weigth,phone_number,date_of_birth,job,gender,way2intro) VALUES ('$username', '$password','$name','$address',$height,$weight,$phone_number,'$date_of_birth','$job',$gender,'$way2intro')";
-    
-        if ($conn->query($sql) === TRUE) {
-            echo "Registration successful. <a href='../index.html'>Login now</a>";
-        } else {
+        try{
+            if ($conn->query($sql) === TRUE) {
+                $newURL = '../index.php';
+                header('Location: '.$newURL);
+            } else {
+                $newURL = '../login.html';
+                header('Location: '.$newURL);
+            }
+        }catch(Exception $e){
             echo "Error: " . $sql . "<br>" . $conn->error;
+            $newURL = '../login.html';
+            header('Location: '.$newURL);
         }
+        
     
         $conn->close();
     }

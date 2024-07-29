@@ -76,6 +76,34 @@
                 }
                 $_SESSION['program_exersice_progid'] = $id_program;
                 $conn->close();
+            }elseif ($_POST['form_type'] === 'search_program_user') {
+                $id_program = $_POST['id_program'];
+                $sql = "SELECT * FROM program_user WHERE program_id = '$id_program'";
+                $result = $conn->query($sql);
+                $_SESSION['program_user_results'] = [];
+                $usernames = []; 
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $usernames[] = $row;
+                    }
+                } else {
+                    $_SESSION['program_user_results'] = "no results found";
+                }
+                // print_r($usernames);
+                foreach($usernames as $username){
+                    $user = $username['username'];
+                    $sql = "SELECT name FROM users WHERE username = '$user'";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        $row['start_time'] = $username['start_time'];
+                        $row['practice_time'] = $username['practice_time'];
+                        $row['diagnosis'] = $username['diagnosis'];
+                        $row['username'] = $username['username'];
+                        $_SESSION['program_user_results'][] = $row;
+                    }
+                }
+                $_SESSION['program_user_progid'] = $id_program;
+                $conn->close();
             }
         }
 
@@ -144,7 +172,7 @@
                     <th>title</th>
                     <th>Number of sessions</th>
                     </tr>";
-                foreach ($_SESSION['program_results'] as $row) {
+                foreach ($_SESSION['program_results'] as $index => $row) {
                     echo "<tr>
                             <td>{$row["id"]}</td>
                             <td>{$row["title"]}</td>
@@ -227,6 +255,60 @@
         <input type="text" name="diagnosis" placeholder="diagnosis" required/>
         <button type="submit">Add</button>
     </form>
+    <h1>Search program User</h1>
+        <form method="post">
+            <input type="text" placeholder="program id" name="id_program" require>
+            <input type="hidden" name="form_type" value="search_program_user">
+            <button type="submit">search</button>
+        </form>
+        
+        <?php
+        if (isset($_SESSION['program_exersice_results'])) {
+            if (is_array($_SESSION['program_exersice_results'])) {
+                echo "<table>
+                <tr>
+                    <th>Username</th>
+                    <th>name</th>
+                    <th>start time</th>
+                    <th>Practice time</th>
+                    <th>diagnosis</th>
+                    <th>Action</th>
+                </tr>";
+                foreach ($_SESSION['program_user_results'] as $index => $row) {
+                    echo "<tr>
+                            <td>{$row['username']}</td>
+                            <td>{$row['name']}</td>
+                            <td>{$row['start_time']}</td>
+                            <td>{$row['practice_time']}</td>
+                            <td>{$row['diagnosis']}</td>
+                            <td>
+                                <button onclick=\"toggleFormProgUser({$index})\">Edit</button>
+                                <div id=\"editFormProgUser{$index}\" style=\"display:none;\">
+                                    <form action='php/edit_program_user.php' method='post'>
+                                        <input type='hidden' name='username' value='{$row['username']}'>
+                                        <input type='hidden' name='program_id' value='{$_SESSION['program_user_progid']}'>
+                                        <input type='date' name='start_time' value='{$row['start_time']}'>
+                                        <input type='time' name='practice_time' value='{$row['practice_time']}'>
+                                        <input type='text' name='diagnosis' value='{$row['diagnosis']}'></input>
+                                        <input type='submit' value='Save Changes'>
+                                    </form>
+                                </div>
+                            </td>
+                            <td>
+                                <form action='php/delete_program_user.php' method='post'>
+                                    <input type='hidden' name='username' value='{$row['username']}'>
+                                    <input type='hidden' name='program_id' value='{$_SESSION['program_user_progid']}'>
+                                    <input type='submit' value='delete'>
+                                </form>
+                            </td>
+                        </tr>";
+                }
+                echo "</table>";
+            } else {
+                echo $_SESSION['exercise_results'];
+            }
+        }
+        ?>
     <button onclick="back()">back</button>
 </body>
 </html>

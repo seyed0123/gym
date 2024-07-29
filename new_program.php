@@ -77,7 +77,7 @@
                 $_SESSION['program_exersice_progid'] = $id_program;
                 $conn->close();
             }elseif ($_POST['form_type'] === 'search_program_user') {
-                $id_program = $_POST['id_program'];
+                $id_program = $_POST['id_program2'];
                 $sql = "SELECT * FROM program_user WHERE program_id = '$id_program'";
                 $result = $conn->query($sql);
                 $_SESSION['program_user_results'] = [];
@@ -242,7 +242,7 @@
                 }
                 echo "</table>";
             } else {
-                echo $_SESSION['exercise_results'];
+                echo $_SESSION['program_exersice_results'];
             }
         }
         ?>
@@ -257,14 +257,14 @@
     </form>
     <h1>Search program User</h1>
         <form method="post">
-            <input type="text" placeholder="program id" name="id_program" require>
+            <input type="text" placeholder="program id" name="id_program2" require>
             <input type="hidden" name="form_type" value="search_program_user">
             <button type="submit">search</button>
         </form>
         
         <?php
-        if (isset($_SESSION['program_exersice_results'])) {
-            if (is_array($_SESSION['program_exersice_results'])) {
+        if (isset($_SESSION['program_user_results'])) {
+            if (is_array($_SESSION['program_user_results'])) {
                 echo "<table>
                 <tr>
                     <th>Username</th>
@@ -305,7 +305,7 @@
                 }
                 echo "</table>";
             } else {
-                echo $_SESSION['exercise_results'];
+                echo $_SESSION['program_user_results'];
             }
         }
         ?>

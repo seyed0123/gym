@@ -1,5 +1,8 @@
 <?php
 session_start();
+$admin_file = fopen("./admin.json", "r") or die("Unable to open file!");
+$admin_file_json = json_decode(fread($admin_file,filesize("./admin.json")));
+fclose($admin_file);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,9 +13,6 @@ session_start();
     <title>Document</title>
 </head>
 <body>
-    <button id="new_session" onclick="new_session()">new session</button>
-    <button id="new_program" onclick="new_program()">new program</button>
-    <button id="search_user" onclick="search_user()">search user</button>
     <form method="post"> 
         <input type="submit" name="logout" value="logout"/> 
     </form>
@@ -26,12 +26,22 @@ session_start();
 
         include('php/db_connect.php'); 
         
-        if ($_SESSION['username'] === "seyed")  {
+        if ($_SESSION['username'] === $admin_file_json->username)  {
+            echo "<button id=\"new_session\" onclick=\"new_session()\">new session</button>
+            <button id=\"new_program\" onclick=\"new_program()\">new program</button>
+            <button id=\"search_user\" onclick=\"search_user()\">search user</button>";
             // Display search form
             echo "<form method=\"post\">
             <input type=\"text\" name=\"search_username\" placeholder=\"Enter username\" required>
             <button type=\"submit\">Search</button>
             </form>";
+        }else {
+            $session_username = $_SESSION['username'];
+            echo "<form method=\"post\">
+            <input type=\"text\" name=\"search_username\" readonly value=\"$session_username\" required>
+            <button type=\"submit\">Search</button>
+            </form>";
+        }
         
             // Display filter form if a user is selected
             if (isset($_POST['search_username']) && !empty($_POST['search_username'])) {
@@ -118,9 +128,6 @@ session_start();
                     echo "No user found with username: $search_username";
                 }
             }
-        } else {
-            echo "Access Denied!";
-        }
         
     ?>
 

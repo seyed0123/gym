@@ -24,10 +24,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $newURL = '../index.php';
                 header('Location: '.$newURL);
             } else {
-                echo "Invalid password.";
+                echo "<script>
+                    alert('Invalid password ');
+                    window.location.href = '../index.php';
+                  </script>";
             }
         } else {
-            echo "No user found with that username.";
+            echo "<script>
+                    alert('Invalid username');
+                    window.location.href = '../index.php';
+                  </script>";
         }
     
         $conn->close();

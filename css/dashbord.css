@@ -1,0 +1,41 @@
+/* Outer border */
+.outer-border {
+    border: 15px solid #aaa; /* Thicker border */
+    padding: 15px; /* Increased padding for more spacing */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper and more pronounced shadow */
+}
+
+/* Middle border */
+.middle-border {
+    border: 10px solid #666; /* Thicker border */
+    padding: 20px; /* Increased padding */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow */
+}
+
+/* Inner border */
+.inner-border {
+    border: 5px solid #333; /* Thicker border */
+    padding: 25px; /* Increased padding */
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4); /* Deeper shadow */
+}
+/* Base styling for the div */
+.div-3d {
+    background-color: #28a745; /* Green background color */
+    padding: 20px; /* Space inside the div */
+    position: relative; /* Allows positioning for pseudo-elements */
+    border: 2px solid transparent; /* Transparent border to accommodate pseudo-elements */
+}
+
+/* Right and bottom borders using pseudo-elements */
+.div-3d::after {
+    content: ""; /* Empty content */
+    position: absolute; /* Absolute positioning */
+    bottom: 0; /* Align to bottom */
+    right: 0; /* Align to right */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    border-right: 10px solid #1c7430; /* Darker green for right border */
+    border-bottom: 10px solid #1c7430; /* Darker green for bottom border */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow to enhance 3D effect */
+    z-index: -1; /* Place behind the div */
+}

@@ -18,22 +18,63 @@ function showEditForm(user) {
     var genderFemaleChecked = !user.gender ? "checked" : "";
 
     var userDetails = `
-        <form id="editForm">
-            <input type="hidden" name="username" value="${user.username}">
-            <label>Name: <input type="text" name="name" value="${user.name}"></label><br>
-            <label>Address: <input type="text" name="address" value="${user.address}"></label><br>
-            <label>Height: <input type="number" name="height" value="${user.heigth}"></label><br>
-            <label>Weight: <input type="number" name="weight" value="${user.weigth}"></label><br>
-            <label>Phone Number: <input type="text" name="phone_number" value="${user.phone_number}"></label><br>
-            <label>Date of Birth: <input type="date" name="date_of_birth" value="${user.date_of_birth}"></label><br>
-            <label>Job: <input type="text" name="job" value="${user.job}"></label><br>
-            <label>Gender: 
-                <input type="radio" name="gender" value="Male" ${genderMaleChecked}> Male
-                <input type="radio" name="gender" value="Female" ${genderFemaleChecked}> Female
-            </label><br>
-            <label>Way to Introduce: <input type="text" name="way2intro" value="${user.way2intro}"></label><br>
-            <button type="button" onclick="updateUser()">Save</button>
-            <button type="button" onclick="deleteUser()">Delete</button>
+        <form  id="editForm">
+           <input type="hidden" name="username" value="${user.username}">
+            <div class="form-row row">
+                <div class="form-group col-6">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" value="${user.name}">
+                </div>
+                <div class="form-group col-6">
+                    <label for="address">Address</label>
+                    <input type="text" class="form-control" id="address" name="address" value="${user.address}">
+                </div>
+            </div>
+            <div class="form-row row">
+                <div class="form-group col-md-6">
+                    <label for="height">Height</label>
+                    <input type="number" class="form-control" id="height" name="height" value="${user.heigth}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="weight">Weight</label>
+                    <input type="number" class="form-control" id="weight" name="weight" value="${user.weigth}">
+                </div>
+            </div>
+            <div class="form-row row">
+                <div class="form-group col-md-6">
+                    <label for="phone_number">Phone Number</label>
+                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="${user.phone_number}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="${user.date_of_birth}">
+                </div>
+            </div>
+            <div class="form-row row">
+                <div class="form-group col-md-6">
+                    <label for="job">Job</label>
+                    <input type="text" class="form-control" id="job" name="job" value="${user.job}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="way2intro">Way to Introduce</label>
+                    <input type="text" class="form-control" id="way2intro" name="way2intro" value="${user.way2intro}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label>Gender</label><br>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="genderMale" value="Male" ${genderMaleChecked}>
+                    <label class="form-check-label" for="genderMale">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="Female" ${genderFemaleChecked}>
+                    <label class="form-check-label" for="genderFemale">Female</label>
+                </div>
+            </div>
+            <div class="form-group ">
+                <button class="btn btn-primary" type="button" onclick="updateUser()">Save</button>
+                <button class="btn btn-danger" type="button" onclick="deleteUser()">Delete</button>
+            </div>
         </form>
     `;
     document.getElementById("user_details").innerHTML = userDetails;

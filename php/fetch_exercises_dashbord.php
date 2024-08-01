@@ -13,7 +13,7 @@ if (isset($_POST['program_id'])) {
 
     if ($exercise_result->num_rows > 0) {
         echo "<h3>Exercises in $program_name:</h3>";
-        echo "<table>";
+        echo "<table class='table table-bordered table-striped'>";
         echo "<tr><th>Title</th><th>Number of Sets</th><th>Description</th></tr>";
         while ($exercise = $exercise_result->fetch_assoc()) {
             echo "<tr>";

@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO exersise_program (exersise_id,program_id) values('$exercise_id','$program_id');";
 
     if ($conn->query($sql) === TRUE) {
-        $newURL = '../index.php';
+        $newURL = '../new_program.php';
         header('Location: '.$newURL);
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

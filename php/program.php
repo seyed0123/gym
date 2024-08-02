@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO program (id,title,num_session) values('$id','$title',$num_session);";
 
     if ($conn->query($sql) === TRUE) {
-        $newURL = '../index.php';
+        $newURL = '../new_program.php';
         header('Location: '.$newURL);
         exit();
     } else {

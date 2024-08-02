@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO program_user (username,program_id,start_time,practice_time,diagnosis) values('$username','$program_id','$start_time','$practice_time','$diagnosis');";
     echo $sql;
     if ($conn->query($sql) === TRUE) {
-        $newURL = '../index.php';
+        $newURL = '../new_program.php';
         header('Location: '.$newURL);
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

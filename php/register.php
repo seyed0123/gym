@@ -1,7 +1,7 @@
 <?php
 include 'db_connect.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $requiredFields = ['username', 'password', 'name','address', 'phone_number', 'height', 'weight', 'date_of_birth', 'job', 'gender', 'way2intro'];
     $missingFields = array_filter($requiredFields, function($field) {
@@ -20,18 +20,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $weight = $_POST['weight'];
         $date_of_birth = $_POST['date_of_birth'];
         $job = $_POST['job'];
-        $gender = $_POST['gender'] === 'male'; 
-        $way2intro = $_POST['way2intro']; 
+        $gender = $_POST['gender'] === 'male'? 1 : 0 ;
+        $way2intro = $_POST['way2intro'];
+        echo $gender."\n";
     
         $sql = "INSERT INTO users (username, password,name,address,heigth,weigth,phone_number,date_of_birth,job,gender,way2intro) VALUES ('$username', '$password','$name','$address',$height,$weight,$phone_number,'$date_of_birth','$job',$gender,'$way2intro')";
+        echo $sql."\n";
         try{
             if ($conn->query($sql) === TRUE) {
                 $newURL = '../index.php';
-                header('Location: '.$newURL);
             } else {
                 $newURL = '../login.html';
-                header('Location: '.$newURL);
             }
+            header('Location: '.$newURL);
         }catch(Exception $e){
             echo "Error: " . $sql . "<br>" . $conn->error;
             $newURL = '../login.html';

@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <title>New program</title>
     <link href="css/new_program.css" rel="stylesheet">
+    <script src="js/jquery.js"></script>
     <script src="js/new_program.js"></script>
 </head>
 <body class="bg-warning-subtle bg-gradient">
@@ -131,11 +132,16 @@
 
     if (isset($_SESSION['exercise_results'])) {
         if (is_array($_SESSION['exercise_results'])) {
-            echo '<div class="table-container"><table class="table table-bordered table-striped">';
+            echo '<form action="php/clear_results.php" method="post">';
+            echo '<input type="hidden" name="clear" value="exercise_results">';
+            echo '<button type="submit" class="btn-close" aria-label="Close"></button>';
+            echo '</form>';
+
+            echo '<div class="table-responsive"><table class="table table-bordered table-striped">';
             echo '<thead class="thead-dark"><tr><th>ID</th><th>Title</th><th>Num Sets</th><th>Description</th><th>Actions</th></tr></thead><tbody>';
             foreach ($_SESSION['exercise_results'] as $index => $row) {
                 echo '<tr>';
-                echo "<td>{$row['id']}</td>";
+                echo "<td onclick='set_exercise_id(\"{$row['id']}\")'>{$row['id']}</td>";
                 echo "<td>{$row['title']}</td>";
                 echo "<td>{$row['num_sets']}</td>";
                 echo "<td>{$row['description']}</td>";
@@ -195,11 +201,16 @@
     <?php
     if (isset($_SESSION['program_results'])) {
         if (is_array($_SESSION['program_results'])) {
+            echo '<form action="php/clear_results.php" method="post">';
+            echo '<input type="hidden" name="clear" value="program_results">';
+            echo '<button type="submit" class="btn-close" aria-label="Close"></button>';
+            echo '</form>';
+
             echo '<div class="table-container"><table class="table table-bordered table-striped">';
             echo '<thead class="thead-dark"><tr><th>ID</th><th>Title</th><th>Number of Sessions</th><th>Actions</th></tr></thead><tbody>';
             foreach ($_SESSION['program_results'] as $index => $row) {
                 echo '<tr>';
-                echo "<td>{$row['id']}</td>";
+                echo "<td onclick='set_program_id(\"{$row['id']}\")'>{$row['id']}</td>";
                 echo "<td>{$row['title']}</td>";
                 echo "<td>{$row['num_session']}</td>";
                 echo '<td>';
@@ -229,10 +240,10 @@
             <div class="form-container">
                 <form method="post" action="php/program_exercise.php">
                     <div class="form-group">
-                        <input type="text" class="form-control my-2" name="exercise_id" placeholder="Exercise ID" required>
+                        <input id="exercise_id_program_exercise" type="text" class="form-control my-2" name="exercise_id" placeholder="Exercise ID" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control my-2" name="program_id" placeholder="Program ID" required>
+                        <input id="program_id_program_exercise" type="text" class="form-control my-2" name="program_id" placeholder="Program ID" required>
                     </div>
                     <button type="submit" class="btn my-2 mx-2 btn-success">Add</button>
                 </form>
@@ -243,7 +254,7 @@
             <div class="form-container">
                 <form method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control my-2" placeholder="Program ID" name="id_program" required>
+                        <input id="program_id_exercise_program_search" type="text" class="form-control my-2" placeholder="Program ID" name="id_program" required>
                     </div>
                     <input type="hidden" name="form_type" value="search_program_exercise">
                     <button type="submit" class="btn my-2 mx-2 btn-primary">Search</button>
@@ -257,6 +268,11 @@
     <?php
     if (isset($_SESSION['program_exersice_results'])) {
         if (is_array($_SESSION['program_exersice_results'])) {
+            echo '<form action="php/clear_results.php" method="post">';
+            echo '<input type="hidden" name="clear" value="program_exersice_results">';
+            echo '<button type="submit" class="btn-close" aria-label="Close"></button>';
+            echo '</form>';
+
             echo '<div class="table-container"><table class="table table-bordered table-striped">';
             echo '<thead class="thead-dark"><tr><th>ID</th><th>Title</th><th>Num Sets</th><th>Description</th><th>Actions</th></tr></thead><tbody>';
             foreach ($_SESSION['program_exersice_results'] as $index => $row) {
@@ -284,11 +300,12 @@
             <h1 class="text-center my-4">Program User</h1>
             <div class="form-container">
                 <form method="post" action="php/program_user.php">
-                    <div class="form-group">
-                        <input type="text" class="form-control my-2" name="username" placeholder="Username" required>
+                    <div class="form-group position-relative">
+                        <input type="text" class="form-control my-2" id="username" name="username" placeholder="Username" required>
+                        <div id="suggestion-box" class="suggestion-list"></div>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control my-2" name="program_id" placeholder="Program ID" required>
+                        <input id="program_id_user_program" type="text" class="form-control my-2" name="program_id" placeholder="Program ID" required>
                     </div>
                     <div class="input-group my-2">
                         <span class="input-group-text align-middle">Start Time</span>
@@ -310,7 +327,7 @@
             <div class="form-container">
                 <form method="post">
                     <div class="form-group">
-                        <input type="text" class="form-control my-2" placeholder="Program ID" name="id_program2" required>
+                        <input id="program_id_user_program_search" type="text" class="form-control my-2" placeholder="Program ID" name="id_program2" required>
                     </div>
                     <input type="hidden" name="form_type" value="search_program_user">
                     <button type="submit" class="btn my-2 mx-2 btn-primary">Search</button>
@@ -326,6 +343,10 @@
     <?php
     if (isset($_SESSION['program_user_results'])) {
         if (is_array($_SESSION['program_user_results'])) {
+            echo '<form action="php/clear_results.php" method="post">';
+            echo '<input type="hidden" name="clear" value="program_user_results">';
+            echo '<button type="submit" class="btn-close" aria-label="Close"></button>';
+            echo '</form>';
             echo '<div class="table-container"><table class="table table-bordered table-striped">';
             echo '<thead class="thead-dark"><tr><th>Username</th><th>Name</th><th>Start Time</th><th>Practice Time</th><th>Diagnosis</th><th>Actions</th></tr></thead><tbody>';
             foreach ($_SESSION['program_user_results'] as $index => $row) {

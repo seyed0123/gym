@@ -9,9 +9,9 @@ fclose($admin_file);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/dashbord.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="js/jquery.js"></script>
+    <script src="js/dashbord.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link href="css/dashbord.css" rel="stylesheet">
@@ -19,42 +19,52 @@ fclose($admin_file);
 
 </head>
 <body class="bg-warning-subtle bg-gradient py-5">
-    <nav class="navbar navbar-expand-lg navbar-light bg-success-subtle my-2 p-2 fixed-top border border-dark-subtle border-2">
-        <a class="navbar-brand" href="#">Brand</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
+<?php
+include('php/db_connect.php');
+$isAdmin = $_SESSION['username'] === $admin_file_json->username;
+$navbarClass = $isAdmin ? "" : "non-admin-margin";
+?>
 
-                <?php
-                session_start();
-                include('php/db_connect.php');
-
-                if ($_SESSION['username'] === $admin_file_json->username) {
-                    echo '<li class="nav-item"><button class="btn btn-primary mx-2 my-2" id="new_session" onclick="new_session()">New Session</button></li>';
-                    echo '<li class="nav-item"><button class="btn btn-primary mx-2 my-2" id="new_program" onclick="new_program()">New Program</button></li>';
-                    echo '<li class="nav-item"><button class="btn btn-primary mx-2 my-2" id="search_user" onclick="search_user()">Search User</button></li>';
-                }
-                ?>
-            </ul>
-            <form class="form-inline d-flex mr-2 my-2" method="post">
-                <!-- Search Form -->
-                <?php
-                if ($_SESSION['username'] === $admin_file_json->username) {
-                    echo '<input class="form-control mx-2 mr-2" type="text" name="search_username" placeholder="Enter username" required>';
-                } else {
-                    $session_username = $_SESSION['username'];
-                    echo '<input class="form-control mx-2 mr-2" type="text" name="search_username" readonly value="'.$session_username.'" required>';
-                }
-                ?>
-                <button class="btn btn-outline-success mx-2 " type="submit">Search</button>
-            </form>
-            <form class="form-inline mr-3 my-2" method="post">
-                <input type="submit" name="logout" value="Logout" class="btn btn-danger">
-            </form>
-        </div>
-    </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-success-subtle my-2 p-2 fixed-top border border-dark-subtle border-2 <?php echo $navbarClass; ?>">
+    <a class="navbar-brand mx-auto" href="#">Brand</a>
+    <?php
+    if ($isAdmin) {
+        echo '
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item"><button class="btn btn-primary mx-2 my-2" id="new_session" onclick="new_session()">New Session</button></li>
+                    <li class="nav-item"><button class="btn btn-primary mx-2 my-2" id="new_program" onclick="new_program()">New Program</button></li>
+                    <li class="nav-item"><button class="btn btn-primary mx-2 my-2" id="search_user" onclick="search_user()">Search User</button></li>
+                </ul>
+            ';
+    }
+    ?>
+    <form class="form-inline d-flex mr-2 my-2" method="post">
+        <?php
+        if ($isAdmin) {
+            echo '<div class="form-group position-relative">
+                        <input type="text" class="form-control mx-2 mr-2" id="username" name="search_username" placeholder="Enter username" required>
+                        <div id="suggestion-box" class="suggestion-list"></div>
+                      </div>';
+        } else {
+            $session_username = $_SESSION['username'];
+            echo '<input class="form-control mx-2 mr-2" type="hidden" name="search_username" readonly value="'.$session_username.'" required>';
+        }
+        ?>
+        <button class="btn btn-outline-success mx-2" type="submit">See info</button>
+    </form>
+    <form class="form-inline mr-3 my-2" method="post">
+        <input type="submit" name="logout" value="Logout" class="btn btn-danger">
+    </form>
+    <?php
+    if ($isAdmin) {
+        echo '</div>';
+    }
+    ?>
+</nav>
 
     <!-- Logout Script -->
     <?php
@@ -159,6 +169,18 @@ fclose($admin_file);
             } else {
                 echo "No user found with username: $search_username";
             }
+        }else {
+            // Message to display when search box is empty
+        // Define the path to the assets folder
+        $assets_folder = 'assets/';
+
+        // Get an array of all image files in the assets folder
+        $images = glob($assets_folder . '*.{jpg,jpeg,png,webp,gif}', GLOB_BRACE);
+
+        $random_image = $images[array_rand($images)];
+
+        // Display the selected image
+        echo "<img src='$random_image' width='100%'>";
         }
 
         ?>

@@ -46,7 +46,7 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
         <?php
         if ($isAdmin) {
             echo '<div class="form-group position-relative">
-                        <input type="text" class="form-control mx-2 mr-2" id="username" name="search_username" placeholder="Enter username" required>
+                        <input type="text" class="form-control mx-2" id="username" name="search_username" placeholder="Enter username" required>
                         <div id="suggestion-box" class="suggestion-list"></div>
                       </div>';
         } else {
@@ -54,7 +54,7 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
             echo '<input class="form-control mx-2 mr-2" type="hidden" name="search_username" readonly value="'.$session_username.'" required>';
         }
         ?>
-        <button class="btn btn-outline-success mx-2" type="submit">See info</button>
+        <button class="btn btn-outline-success mx-3" type="submit">See info</button>
     </form>
     <form class="form-inline mr-3 my-2" method="post">
         <input type="submit" name="logout" value="Logout" class="btn btn-danger">
@@ -87,7 +87,7 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
 
             if ($user_result->num_rows > 0) {
                 $user = $user_result->fetch_assoc();
-                echo "<h3>User Details:</h3>";
+                echo "<h3 class='my-4 text-center' >User Details:</h3>";
                 echo "<table class='table table-bordered table-striped'>";
                 echo "<tr><th>Field</th><th>Value</th></tr>";
                 echo "<tr><td>Name</td><td>" . $user['name'] . "</td></tr>";
@@ -100,14 +100,17 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
                 echo "<tr><td>Gender</td><td>" . ($user['gender'] ? 'Male' : 'Female') . "</td></tr>";
                 echo "<tr><td>Way to Introduce</td><td>" . $user['way2intro'] . "</td></tr>";
                 echo "</table>";
-
+        ?>
+        </div>
+        <div class="container my-5 rounded bg-success-subtle p-3 outer-border middle-border inner-border div-3d">
+            <?php
                 // Fetch user programs
                 $program_query = $conn->prepare("SELECT * FROM program_user JOIN program ON program_user.program_id = program.id WHERE program_user.username = ?");
                 $program_query->bind_param("s", $search_username);
                 $program_query->execute();
                 $program_result = $program_query->get_result();
 
-                echo "<h3>Programs:</h3>";
+                echo "<h3 class='my-4 text-center'>Programs:</h3>";
                 echo "<table class='table table-bordered table-striped'>";
                 echo "<tr><th>Program</th><th>Start Time</th><th>Practice Time</th><th>Diagnosis</th></tr>";
                 while ($program = $program_result->fetch_assoc()) {
@@ -119,21 +122,29 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
                     echo "</tr>";
                 }
                 echo "</table>";
-                echo "    <div id=\"exercise_details\"></div>";
+
+            echo " <div id=\"exercise_details\"></div>";
+
+            ?>
+        </div>
+        <div class="container my-5 rounded bg-success-subtle p-3 outer-border middle-border inner-border div-3d">
+            <?php
+                echo "<h3 class='my-4 text-center'>Sessions</h3>";
+                echo "<h4>Filter session:</h4>";
                 // Display filter form
-                echo "<form method=\"post\">
+                echo "<form method=\"post\" class='row my-3 g-3 justify-content-center'>
                         <input type=\"hidden\" name=\"search_username\" value=\"$search_username\">
-                        <div class='input-group'>
+                        <div class='input-group col'>
                             <span class='input-group-text align-middle'>Start Date</span>
                             <input class='form-control' type=\"date\" name=\"start_date\" placeholder=\"Start Date\">
                         </div>
-                        <div class='input-group'>
+                        <div class='input-group col'>
                             <span class='input-group-text align-middle'>End Date</span>
                             <input class='form-control' type=\"date\" name=\"end_date\" placeholder=\"End Date\">
                         </div>
                         
                         
-                        <button class='btn btn-outline-success' type=\"submit\">Filter Sessions</button>
+                        <button class='btn btn-outline-success col-2 btn-lg' type=\"submit\">Filter Sessions</button>
                         </form>";
 
                 // Fetch user sessions with optional date filter
@@ -150,7 +161,7 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
                 $session_query->execute();
                 $session_result = $session_query->get_result();
 
-                echo "<h3>Sessions:</h3>";
+
                 echo "<div class='table-responsive'>";
                 echo "<table class='table table-bordered table-striped'>";
                 echo "<tr><th>Date</th><th>Total Time</th><th>Session Number</th><th>Time in Sauna</th><th>Time in Jacuzzi</th><th>Time in Hydrotherapy</th><th>Time in Massage</th></tr>";

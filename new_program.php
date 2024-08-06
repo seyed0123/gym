@@ -1,3 +1,14 @@
+<?php
+session_start();
+$admin_file = fopen("./admin.json", "r") or die("Unable to open file!");
+$admin_file_json = json_decode(fread($admin_file,filesize("./admin.json")));
+fclose($admin_file);
+$isAdmin = $_SESSION['username'] === $admin_file_json->username;
+if (!$isAdmin) {
+    header('Location: index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,6 +178,8 @@
         }
     }
     ?>
+</div>
+<div class="container my-4 mx-auto border rounded bg-success-subtle shadow-lg border-4 border-dark-subtle p-3">
     <div class="row">
         <div class="col">
             <h1 class="text-center my-4">New Program</h1>
@@ -234,6 +247,8 @@
         }
     }
     ?>
+</div>
+<div class="container my-4 mx-auto border rounded bg-success-subtle shadow-lg border-4 border-dark-subtle p-3">
     <div class="row">
         <div class="col">
             <h1 class="text-center my-4">Program Exercise</h1>
@@ -295,6 +310,8 @@
         }
     }
     ?>
+</div>
+<div class="container my-4 mx-auto border rounded bg-success-subtle shadow-lg border-4 border-dark-subtle p-3">
     <div class="row">
         <div class="col">
             <h1 class="text-center my-4">Program User</h1>

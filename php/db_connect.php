@@ -1,4 +1,12 @@
 <?php
+
+
+//$isAdmin = $_SESSION['username'] === $admin_file_json->username;
+//if (!$isAdmin) {
+//    header('Location: index.php');
+//    exit();
+//}
+
 $servername = "localhost";
 $username = "seyed";
 $password = "Seyed@5516";

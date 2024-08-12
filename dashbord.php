@@ -26,7 +26,7 @@ $navbarClass = $isAdmin ? "" : "non-admin-margin";
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-success-subtle my-2 p-2 fixed-top border border-dark-subtle border-2 <?php echo $navbarClass; ?>">
-    <a class="navbar-brand mx-auto" href="#">Brand</a>
+    <a class="navbar-brand mx-auto" href="#">GYM</a>
     <?php
     if ($isAdmin) {
         echo '

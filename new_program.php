@@ -56,7 +56,6 @@ if (!$isAdmin) {
 
 
     <?php
-    session_start();
     include 'php/db_connect.php';
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

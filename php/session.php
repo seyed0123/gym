@@ -1,7 +1,7 @@
 <?php
 session_start();
 $admin_file = fopen("../admin.json", "r") or die("Unable to open file!");
-$admin_file_json = json_decode(fread($admin_file, filesize("./admin.json")));
+$admin_file_json = json_decode(fread($admin_file, filesize("../admin.json")));
 fclose($admin_file);
 $isAdmin = $_SESSION['username'] === $admin_file_json->username;
 if (!$isAdmin) {
@@ -25,15 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     echo $sql;
     try{
         $conn->query($sql);
-        $newURL = '../index.php';
-        header('Location: '.$newURL);
+        echo "<script>
+                    window.location.href = '../index.php';
+                    alert('Session created successfully');
+                  </script>";
     }catch(Exception $e){
         echo  $conn->error;
-        echo '<button onclick ="navigate()">ok</button>';
-        echo '<script>function navigate(){
-                    window.location.href = "../index.php";
-                }
-                </script>';
+        echo "<script>
+                    window.location.href = '../index.php';
+                    alert('Session doesn\'t created);
+                  </script>";
     }
     $conn->close();
 }

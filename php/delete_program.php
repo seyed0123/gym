@@ -1,7 +1,7 @@
 <?php
 session_start();
 $admin_file = fopen("../admin.json", "r") or die("Unable to open file!");
-$admin_file_json = json_decode(fread($admin_file, filesize("./admin.json")));
+$admin_file_json = json_decode(fread($admin_file, filesize("../admin.json")));
 fclose($admin_file);
 $isAdmin = $_SESSION['username'] === $admin_file_json->username;
 if (!$isAdmin) {

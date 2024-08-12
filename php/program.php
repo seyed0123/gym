@@ -1,7 +1,7 @@
 <?php
 session_start();
 $admin_file = fopen("../admin.json", "r") or die("Unable to open file!");
-$admin_file_json = json_decode(fread($admin_file, filesize("./admin.json")));
+$admin_file_json = json_decode(fread($admin_file, filesize("../admin.json")));
 fclose($admin_file);
 $isAdmin = $_SESSION['username'] === $admin_file_json->username;
 if (!$isAdmin) {
@@ -19,11 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO program (id,title,num_session) values('$id','$title',$num_session);";
 
     if ($conn->query($sql) === TRUE) {
-        $newURL = '../new_program.php';
-        header('Location: '.$newURL);
+//        $newURL = '../new_program.php';
+//        header('Location: '.$newURL);
+        echo "<script>
+                    window.location.href = '../new_program.php;
+                    alert('program created successfully');
+                  </script>";
         exit();
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+//        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<script>
+                    window.location.href = '../new_program.php;
+                    alert('program doesn\'t created);
+        </script>";
     }
     $conn->close();
 }

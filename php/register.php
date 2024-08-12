@@ -28,15 +28,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo $sql."\n";
         try{
             if ($conn->query($sql) === TRUE) {
-                $newURL = '../index.php';
+//                $newURL = '../index.php';
+                echo "<script>
+                    window.location.href = '../index.php';
+                    alert('account created successfully');
+                  </script>";
             } else {
-                $newURL = '../login.html';
+                echo "<script>
+                    window.location.href = '../index.php';
+                    alert('account doesn\'t created successfully');
+                  </script>";
             }
-            header('Location: '.$newURL);
+//            header('Location: '.$newURL);
         }catch(Exception $e){
             echo "Error: " . $sql . "<br>" . $conn->error;
-            $newURL = '../login.html';
-            header('Location: '.$newURL);
+            echo "<script>
+                    window.location.href = '../index.php';
+                    alert('account doesn\'t created successfully');
+                  </script>";
+
         }
         
     

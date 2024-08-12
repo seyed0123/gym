@@ -25,14 +25,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header('Location: '.$newURL);
             } else {
                 echo "<script>
-                    alert('Invalid password ');
                     window.location.href = '../index.php';
+                    alert('Invalid password ');
                   </script>";
             }
         } else {
             echo "<script>
-                    alert('Invalid username');
                     window.location.href = '../index.php';
+                    alert('Invalid username');
                   </script>";
         }
     

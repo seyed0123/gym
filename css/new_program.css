@@ -1,0 +1,21 @@
+.fixed-button {
+    position: fixed;
+    bottom: 10px;
+    left: 5px;
+}
+.suggestion-list {
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1000;
+    width: 100%;
+    background-color: white;
+}
+.suggestion-item {
+    padding: 10px;
+    cursor: pointer;
+}
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}

@@ -4,13 +4,13 @@
 
 <img src="shots/gym.jpg" width="50%">
 
-A PHP-based application crafted to optimize and simplify gym management. It offers an intuitive interface for efficiently managing memberships, tracking attendance, processing billing, and scheduling classes, ensuring seamless operation and enhanced member satisfaction.
+A PHP-based application crafted to optimize and simplify gym management. It offers an intuitive interface for efficiently managing memberships, tracking attendance, and scheduling classes, ensuring seamless operation and enhanced member satisfaction.
 </div>
 
 ## Features
 - Member Management: Add, update, and delete member profiles, track memberships, and manage renewals.
-- Attendance Tracking: Record and monitor daily attendance with creating session for them.
-- Program Management: Add ,update and delete program and exercise and assign programs to the users.
+- Attendance Tracking: Record and monitor daily attendance by creating sessions for them.
+- Program Management: Add, update, delete programs, exercise, and assign programs to the users.
 - Reports: Generate detailed reports on member activity, and class attendance.
 
 ## Requirements
@@ -25,7 +25,7 @@ git clone https://github.com/seyed0123/gym.git
 cd gym
 ```
 ### 2- Set up the database
-- Install the mysql composer lib.
+- Install the MySQL composer lib.
 - Create a MySQL database.
 - enter the database info in the [db](php/db_connect.php) file.
 - create tables using [table](table.sql) file
